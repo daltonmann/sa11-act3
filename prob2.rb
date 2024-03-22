@@ -1,5 +1,14 @@
 def parse_invoices(invoice_data)
-
+  invoice_data.each_line do |line|
+    match_data = line.match(/(\d{4}-\d{2}-\d{2}) - (INV[\d]+) - ([^-]+) - \$([0-9,]+)/)
+    if match_data
+      date = match_data[1] # Captures the date in YYYY-MM-DD format
+      invoice_number = match_data[2] # Captures the string beginning with INV and all numbers after it
+      client_name = match_data[3] # Captures a string that is not a hyphen for the name
+      amount = match_data[4] # Captures the string beginning with $ for the dollar amount
+      puts "Date: #{date}, Invoice Number: #{invoice_number}, Client: #{client_name}, Amount: $#{amount}"
+    end
+  end
 end
 
 invoice_entries = <<-INVOICES
