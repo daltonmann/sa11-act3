@@ -1,5 +1,13 @@
 def extract_urls(text)
+  pattern = %r{
+    (?i) (?:https?://|ftp://) # Case insensitive, captures urls starting with http, https, or ftp
+    (?:(?:www\.|\w+\\.)?[\w-]+\.[\w.-]{2,}) # Captures links beginning with or without www., then the domain name and top level domain separated by a .
+    (?:/[\w/.?=&+]+)? # Captures paths and queries starting with a backslash after the top level domain to the end of the url
+    }x
 
+  text.scan(pattern) do |url|
+    puts url
+  end
 end
 
 sample_text = "Visit our site at http://www.example.org for more information.
